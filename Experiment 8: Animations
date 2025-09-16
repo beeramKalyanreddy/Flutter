@@ -1,0 +1,41 @@
+a) Implicit (AnimatedContainer)
+This uses AnimatedContainer to resize a box smoothly.
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MaterialApp(home: AnimateBox()));
+
+class AnimateBox extends StatefulWidget {
+  const AnimateBox({super.key});
+  @override State<AnimateBox> createState() => _AnimateBoxState();
+}
+
+class _AnimateBoxState extends State<AnimateBox> {
+  double size = 100;
+  @override
+  Widget build(BuildContext c) => Scaffold(
+    body: Center(child: Column(children: [
+      AnimatedContainer(duration: const Duration(seconds: 1),
+        width: size, height: size, color: Colors.blue),
+      ElevatedButton(onPressed: () => setState(() => size = size == 100 ? 200 : 100),
+        child: const Text("Animate"))
+    ])),
+  );
+}
+b) Explicit (FadeTransition)
+This shows explicit animation with FadeTransition and AnimationController.
+import 'package:flutter/material.dart';
+
+void main() => runApp(const MaterialApp(home: FadeDemo()));
+
+class FadeDemo extends StatefulWidget {
+  const FadeDemo({super.key});
+  @override State<FadeDemo> createState() => _FadeDemoState();
+}
+
+class _FadeDemoState extends State<FadeDemo> with SingleTickerProviderStateMixin {
+  late AnimationController c;
+  @override void initState() { super.initState(); c = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat(reverse: true); }
+  @override void dispose() { c.dispose(); super.dispose(); }
+  @override Widget build(BuildContext ctx) => Scaffold(
+    body: Center(child: FadeTransition(opacity: c, child: const Text("Fading Text"))));
+}
