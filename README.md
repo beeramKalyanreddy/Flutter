@@ -1,6 +1,6 @@
 This repository contains a simple Flutter lab project. It is designed to help you get started with Flutter and Dart, and explore some of their core features.
 
-🚀 Getting Started
+Getting Started
 To run this project, make sure you have the Flutter SDK installed and configured on your machine.
 
 Clone the repository:
@@ -15,7 +15,7 @@ flutter pub get
 Run the app:
 
 flutter run
-✨ Features
+ Features
 This lab includes a few key components to help you learn Flutter:
 
 Stateless and Stateful Widgets: Demonstrates the difference between widgets that don't change their state and those that do.
