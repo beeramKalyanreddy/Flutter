@@ -1,0 +1,50 @@
+a) Fetch Users
+This program fetches user data from a REST API and displays names.
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+void main() => runApp(const MaterialApp(home: ApiDemo()));
+
+class ApiDemo extends StatefulWidget {
+  const ApiDemo({super.key});
+  @override State<ApiDemo> createState() => _ApiDemoState();
+}
+
+class _ApiDemoState extends State<ApiDemo> {
+  List data = [];
+  @override void initState() { super.initState(); fetch(); }
+  fetch() async {
+    final res = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users"));
+    setState(() => data = jsonDecode(res.body));
+  }
+  @override Widget build(BuildContext c) => Scaffold(
+    body: data.isEmpty ? const CircularProgressIndicator() :
+      ListView(children: data.map((u) => ListTile(title: Text(u['name'] ?? ''))).toList()),
+  );
+}
+b) Display in Cards
+This shows user details in Card layout for better readability.
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+void main() => runApp(const MaterialApp(home: UserCards()));
+
+class UserCards extends StatefulWidget {
+  const UserCards({super.key});
+  @override State<UserCards> createState() => _UserCardsState();
+}
+
+class _UserCardsState extends State<UserCards> {
+  List users = [];
+  @override void initState() { super.initState(); load(); }
+  load() async {
+    var res = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users"));
+    setState(() => users = jsonDecode(res.body));
+  }
+  @override Widget build(BuildContext c) => Scaffold(
+    body: ListView(children: users.map((u) =>
+      Card(child: ListTile(title: Text(u['name']), subtitle: Text(u['email'])))).toList()),
+  );
+}
